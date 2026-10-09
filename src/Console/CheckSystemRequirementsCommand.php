@@ -39,6 +39,7 @@ class CheckSystemRequirementsCommand extends Command
         //some sort of virtualisation require 
         if (!$io->confirm('Please confirm that you have some sort of virtualisation installed: [ Docker, QEMU, Hyperkit, Hyper-V, KVM, Parallels, Podman, VirtualBox, or VMware Fusion/Workstation ]')) {
             $io->error('You need to install some sort of virtualisation first, before you can run minikube');
+            return Command::FAILURE;
         }
 
         $output->writeLn([
@@ -54,7 +55,7 @@ class CheckSystemRequirementsCommand extends Command
         }
        
         $output->writeLn([
-            'Pete Tong - We continue...', 
+            'We continue...', 
             '',
             '<info>Checking for kubectl</>',
             ''
@@ -62,7 +63,7 @@ class CheckSystemRequirementsCommand extends Command
 
         if (strlen(exec('command -v kubectl')) == false) 
         {
-            $io->error("You don't have Minikube installed"); 
+            $io->error("You don't have kubectl installed"); 
             $io->writeln('<href=https://kubernetes.io/docs/tasks/tools/>Install kubectl</>');
             return Command::FAILURE;
         }
@@ -85,16 +86,20 @@ class CheckSystemRequirementsCommand extends Command
         $output->writeLn([
             'We continue...', 
             '',
-            '<info>Checking for cert manager </>',
+            '<info>Checking for the cert manager helm repo</>',
             ''
         ]);
 
-        //and that we have the cert-manager available locally 
-        if (strlen(exec('helm repo list | grep "jetstack" ')) == false) 
+        //clusters:minikube-cert-manager installs from the jetstack repo, so add it when it's missing
+        if (strlen(exec('helm repo list 2>/dev/null | grep "jetstack" ')) == false) 
         {
-            $io->error("You don't have the Helm Jetstack repo installed"); 
-            $io->writeln('helm install oci://quay.io/jetstack/charts/cert-manager:v1.19.0');
-            return Command::FAILURE;
+            $output->writeln('helm repo add jetstack https://charts.jetstack.io');
+            passthru('helm repo add jetstack https://charts.jetstack.io', $result);
+
+            if ($result !== 0) {
+                $io->error("Couldn't add the jetstack helm repo");
+                return Command::FAILURE;
+            }
         }
 
         $output->writeln([

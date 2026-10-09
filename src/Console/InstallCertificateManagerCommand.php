@@ -29,7 +29,12 @@ class InstallCertificateManagerCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('<fg=green>About to k8s certificate manager</>');
+        $output->writeln('<fg=green>About to install the k8s certificate manager</>');
+
+        if (strlen(exec('helm repo list 2>/dev/null | grep "jetstack" ')) == false) {
+            $output->writeln('helm repo add jetstack https://charts.jetstack.io');
+            passthru('helm repo add jetstack https://charts.jetstack.io');
+        }
 
         $version = getenv('MINIKUBE_CERT_MANAGER_VERSION') ?: 'v1.15.2';
 

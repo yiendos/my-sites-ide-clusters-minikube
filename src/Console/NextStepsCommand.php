@@ -35,13 +35,19 @@ class NextStepsCommand extends Command
 
         $output->writeln([
             '',
-            '<fg=green>Congratulations you have just launched Minikube locally and configured it for: $site</>',
+            "<fg=green>Congratulations you have just launched Minikube locally and configured it for: $site</>",
             '',
             '<fg=green>Your next steps can be:</>',
         ]);
 
-        $output->writeLn('my-sites-ide deploy:site:build ' . $site);
-        $output->writeLn("my-sites-ide minikube:load-images");
+        //building images is deploy's job - only point at it when it's installed
+        if ($this->getApplication()?->has('deploy:site:build')) {
+            $output->writeLn('my-sites-ide deploy:site:build ' . $site);
+        } else {
+            $output->writeLn("build and tag your site's images (e.g. with onsidelive/deploy's deploy:site:build)");
+        }
+
+        $output->writeLn('my-sites-ide clusters:minikube-load-images ' . $site);
 
         return Command::SUCCESS;
     }
