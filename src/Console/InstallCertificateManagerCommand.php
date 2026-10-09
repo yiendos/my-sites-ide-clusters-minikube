@@ -31,7 +31,9 @@ class InstallCertificateManagerCommand extends Command
     {
         $output->writeln('<fg=green>About to k8s certificate manager</>');
 
-        passthru("helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.15.2 --set crds.enabled=true");
+        $version = getenv('MINIKUBE_CERT_MANAGER_VERSION') ?: 'v1.15.2';
+
+        passthru("helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version $version --set crds.enabled=true");
 
         return Command::SUCCESS;
     }

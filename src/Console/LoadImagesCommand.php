@@ -33,9 +33,11 @@ class LoadImagesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $site = $input->getArgument('site');
+        $registry = getenv('MINIKUBE_REGISTRY') ?: 'registry.digitalocean.com/yiendos';
+        $images = ['fpm-server', 'web-server', 'cron', 'cli'];
 
-        $io = (new SymfonyStyle($input, $output)); 
-        $io->progressStart(100);
+        $io = (new SymfonyStyle($input, $output));
+        $io->progressStart(count($images));
 
         $output->writeln([
             "",
@@ -43,46 +45,16 @@ class LoadImagesCommand extends Command
             ""
         ]);
 
-        $output->writeLn([
-            "",
-            "minikube image load --overwrite=true registry.digitalocean.com/yiendos/$site:fpm-server-latest",
-            ""
-        ]);
+        foreach ($images as $image)
+        {
+            $command = "minikube image load --overwrite=true $registry/$site:$image-latest";
 
-        passthru("minikube image load --overwrite=true registry.digitalocean.com/yiendos/$site:fpm-server-latest");
+            $output->writeLn(["", $command, ""]);
 
-        $io->progressAdvance(20);
+            passthru($command);
 
-        $output->writeLn([
-            "",
-            "",
-            "minikube image load --overwrite=true registry.digitalocean.com/yiendos/$site:web-server-latest",
-            ""
-        ]);
-
-        passthru("minikube image load --overwrite=true registry.digitalocean.com/yiendos/$site:web-server-latest");
-
-        $io->progressAdvance(20);
-
-        $output->writeLn([
-            "",
-            "",
-            "minikube image load --overwrite=true registry.digitalocean.com/yiendos/$site:cron-latest",
-            ""
-        ]);
-
-        passthru("minikube image load --overwrite=true registry.digitalocean.com/yiendos/$site:cron-latest");
-
-        $io->progressAdvance(20);
-
-        $output->writeLn([
-            "",
-            "",
-            "minikube image load --overwrite=true registry.digitalocean.com/yiendos/$site:cli-latest",
-            "",
-        ]);
-
-        passthru("minikube image load --overwrite=true registry.digitalocean.com/yiendos/$site:cli-latest");
+            $io->progressAdvance();
+        }
 
         $io->progressFinish();
 

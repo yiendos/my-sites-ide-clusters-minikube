@@ -33,9 +33,12 @@ class PortForwardCommand extends Command
     {
         $site = $input->getArgument('site');
 
-        $output->writeln("kubectl --namespace $site port-forward service/$site-webserver 8090:80");
+        $port = getenv('MINIKUBE_PORT_FORWARD') ?: '8090';
+        $command = "kubectl --namespace $site port-forward service/$site-webserver $port:80";
 
-        passthru("kubectl --namespace $site port-forward service/$site-webserver 8090:80");
+        $output->writeln([$command, "<fg=green>Serving $site on http://localhost:$port</>"]);
+
+        passthru($command);
 
         return Command::SUCCESS;
     }

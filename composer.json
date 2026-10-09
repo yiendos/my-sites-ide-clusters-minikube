@@ -3,7 +3,13 @@
     "description": "Minikube - a single-node Kubernetes cluster on your machine, set up to mimic DigitalOcean, for test deployments - for my-sites-ide",
     "type": "my-sites-ide-plugin",
     "license": "MIT",
-    "keywords": ["my-sites-ide", "minikube", "kubernetes", "k8s", "helm"],
+    "keywords": [
+        "my-sites-ide",
+        "minikube",
+        "kubernetes",
+        "k8s",
+        "helm"
+    ],
     "authors": [
         {
             "name": "Paul Yiend",
@@ -21,7 +27,9 @@
     },
     "extra": {
         "my-sites-ide": {
-            "commands": "src/Console"
+            "commands": "src/Console",
+            "env": ".env",
+            "env-example": "env-example"
         }
     }
 }

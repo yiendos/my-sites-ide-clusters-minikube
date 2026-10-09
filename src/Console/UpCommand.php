@@ -44,7 +44,10 @@ class UpCommand extends Command
 
         $output->writeln('<fg=green>About to start the minikube instance</>');
 
-        passthru("minikube start --addons=dashboard,metrics-server,traefik --container-runtime=containerd && minikube cp $createStoragePath /tmp/create-storage.sh && minikube ssh 'sh /tmp/create-storage.sh'");
+        $addons = getenv('MINIKUBE_ADDONS') ?: 'dashboard,metrics-server,traefik';
+        $runtime = getenv('MINIKUBE_CONTAINER_RUNTIME') ?: 'containerd';
+
+        passthru("minikube start --addons=$addons --container-runtime=$runtime && minikube cp $createStoragePath /tmp/create-storage.sh && minikube ssh 'sh /tmp/create-storage.sh'");
 
         return Command::SUCCESS;
     }
