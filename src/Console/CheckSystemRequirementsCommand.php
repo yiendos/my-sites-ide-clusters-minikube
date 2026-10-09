@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace Yiendos\Deploy\Console\Minikube;
+namespace Yiendos\MySitesIde\Clusters\Minikube\Console;
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
@@ -20,7 +20,7 @@ class CheckSystemRequirementsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('minikube:system-requirements')
+            ->setName('clusters:minikube-system-requirements')
             ->setDescription('In order to run minikube you need some stuff installed on your system')
         ;
     }
@@ -108,7 +108,7 @@ class CheckSystemRequirementsCommand extends Command
         {
             $site = $io->ask('Which site would you like to configure Minikube for? [./Repos/NAME/deploy]'); 
 
-            $startConfigureInput = new ArrayInput(['command' => 'minikube:start-configure', 'site' => $site]);
+            $startConfigureInput = new ArrayInput(['command' => 'clusters:minikube-start-configure', 'site' => $site]);
 
             $application->doRun($startConfigureInput, $output);
         }

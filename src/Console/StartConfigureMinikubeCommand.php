@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace Yiendos\Deploy\Console\Minikube; 
+namespace Yiendos\MySitesIde\Clusters\Minikube\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -19,7 +19,7 @@ class StartConfigureMinikubeCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('minikube:start-configure')
+            ->setName('clusters:minikube-start-configure')
             ->setDescription('A one line command to start minikube, install a mimic storage class, create phsyical folders in the minikube instance for persistence volumes')
             ->addArgument('site', InputArgument::REQUIRED, 'Which Repository site do you want to deploy? [./Repos/NAME/deploy]')
         ;
@@ -37,19 +37,19 @@ class StartConfigureMinikubeCommand extends Command
     {
         $site = $input->getArgument('site');
 
-        $upInput = new ArrayInput(['command' => 'minikube:up', 'site' => $site]);
+        $upInput = new ArrayInput(['command' => 'clusters:minikube-up', 'site' => $site]);
 
         $application->doRun($upInput, $output);
 
-        $storageInput = new ArrayInput(['command' => 'minikube:storage', 'site' => $site]); 
+        $storageInput = new ArrayInput(['command' => 'clusters:minikube-storage', 'site' => $site]); 
 
         $application->doRun($storageInput,  $output);
 
-        $certificateInput = new ArrayInput(['command' => 'minikube:cert-manager']); 
+        $certificateInput = new ArrayInput(['command' => 'clusters:minikube-cert-manager']); 
 
         $application->doRun($certificateInput, $output);
 
-        $nextStepsInput = new ArrayInput(['command' => 'minikube:next-steps', 'site' => $site]); 
+        $nextStepsInput = new ArrayInput(['command' => 'clusters:minikube-next-steps', 'site' => $site]); 
 
         $application->doRun($nextStepsInput, $output);
 

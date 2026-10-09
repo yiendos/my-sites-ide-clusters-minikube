@@ -1,14 +1,17 @@
-<?php 
+<?php
 
-namespace Yiendos\Deploy\Console\Minikube; 
+namespace Yiendos\MySitesIde\Clusters\Minikube\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Yiendos\MySitesIde\Clusters\Minikube\Traits\InteractsWithMinikube;
 
 class UpCommand extends Command
 {
+    use InteractsWithMinikube;
+
     /**
      * The ability to configure the console command
      *
@@ -17,7 +20,7 @@ class UpCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('minikube:up')
+            ->setName('clusters:minikube-up')
             ->setDescription('Sping up minikube locally, to enable test deployments')
             ->addArgument('site', InputArgument::REQUIRED, 'Which Repository site do you want to deploy? [./Repos/NAME/deploy]')
         ;
@@ -32,7 +35,12 @@ class UpCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $site = $input->getArgument('site');
-        $createStoragePath = CONSOLE_ROOT . "/Repos/$site/_build/deployment/create-storage.sh";
+        $createStoragePath = $this->deploymentFile($site, 'create-storage.sh');
+
+        if (!file_exists($createStoragePath)) {
+            $output->writeln("<error>No $createStoragePath - run deploy:site:bootstrap $site first</error>");
+            return Command::FAILURE;
+        }
 
         $output->writeln('<fg=green>About to start the minikube instance</>');
 

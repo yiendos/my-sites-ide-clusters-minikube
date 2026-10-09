@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace Yiendos\Deploy\Console\Minikube; 
+namespace Yiendos\MySitesIde\Clusters\Minikube\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -17,7 +17,7 @@ class NextStepsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('minikube:next-steps')
+            ->setName('clusters:minikube-next-steps')
             ->setDescription('The ability to provide feedback, once the minikube instance is up and running')
             ->addArgument('site', InputArgument::REQUIRED, 'Which Repository site do you want to deploy? [./Repos/NAME/deploy]')
         ;

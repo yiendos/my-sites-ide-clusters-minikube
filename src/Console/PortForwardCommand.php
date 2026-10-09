@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace Yiendos\Deploy\Console\Minikube; 
+namespace Yiendos\MySitesIde\Clusters\Minikube\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -17,7 +17,7 @@ class PortForwardCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('minikube:port-forward')
+            ->setName('clusters:minikube-port-forward')
             ->setDescription('The ability to access your site in the browser through localhost')
             ->addArgument('site', InputArgument::REQUIRED, 'Which Repository site do you want to access? [./Repos/NAME/deploy]')
         ;

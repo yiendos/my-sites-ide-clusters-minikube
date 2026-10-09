@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace Yiendos\Deploy\Console\Minikube; 
+namespace Yiendos\MySitesIde\Clusters\Minikube\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,7 +18,7 @@ class LoadImagesCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('minikube:load-images')
+            ->setName('clusters:minikube-load-images')
             ->setDescription('The ability to load docker images into minikube')
             ->addArgument('site', InputArgument::REQUIRED, 'Which Repository site do you want to load images for? [./Repos/NAME/deploy]')
         ;

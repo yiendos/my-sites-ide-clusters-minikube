@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace Yiendos\Deploy\Console\Minikube; 
+namespace Yiendos\MySitesIde\Clusters\Minikube\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -17,7 +17,7 @@ class DashboardCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('minikube:dashboard')
+            ->setName('clusters:minikube-dashboard')
             ->setDescription('The ability to access the minikube dashboard through a browser and localhost')
         ;
     }

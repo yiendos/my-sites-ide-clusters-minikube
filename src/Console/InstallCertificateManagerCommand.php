@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace Yiendos\Deploy\Console\Minikube; 
+namespace Yiendos\MySitesIde\Clusters\Minikube\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,7 +16,7 @@ class InstallCertificateManagerCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('minikube:cert-manager')
+            ->setName('clusters:minikube-cert-manager')
             ->setDescription('The ability to install certificate manager for k8s')
         ;
     }
