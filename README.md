@@ -2,7 +2,7 @@
 
 A [my-sites-ide](https://github.com/yiendos/my-sites-ide) plugin for [Minikube](https://minikube.sigs.k8s.io/), a single-node Kubernetes cluster on your own machine. It's set up to mimic a DigitalOcean cluster, so you can try deployments locally before you push to production.
 
-The plugin *provides* the cluster. Building images and pushing a site with helm is a deploy plugin's job, e.g. `onsidelive/deploy`. Each works without the other, and they work together when both are installed.
+The plugin *provides* the cluster. Building images and pushing a site with helm is a deploy plugin's job, e.g. [yiendos/my-sites-ide-deploy-k8s](https://github.com/yiendos/my-sites-ide-deploy-k8s). Each works without the other, and they work together when both are installed.
 
 Minikube runs on your host, not in the my-sites-ide compose stack, so this plugin has no containers of its own.
 
