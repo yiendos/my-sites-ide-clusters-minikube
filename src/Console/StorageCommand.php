@@ -39,7 +39,7 @@ class StorageCommand extends Command
         $repoConfig = $this->deploymentFile($site, 'local.yaml');
 
         if (!file_exists($repoConfig)) {
-            $output->writeln("<error>No $repoConfig - run deploy:site:bootstrap $site first</error>");
+            $output->writeln("<error>No $repoConfig - run deploy:k8s-bootstrap $site first</error>");
             return Command::FAILURE;
         }
 

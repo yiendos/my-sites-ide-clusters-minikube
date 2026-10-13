@@ -1,8 +1,8 @@
 # [minikube]
 # Defaults live in this plugin's .env - uncomment to override.
-# The registry deploy:site:build tags a site's images with; clusters:minikube-load-images
-# loads <registry>/<site>:{fpm-server,web-server,cron,cli}-latest into the cluster.
-#MINIKUBE_REGISTRY=registry.digitalocean.com/yiendos
+# Only for clusters:minikube-load-images run without image references (deploy:k8s-build-push
+# passes them) - loads <registry>/<site>:{fpm-server,web-server,cron,cli}-latest into the cluster.
+#MINIKUBE_REGISTRY=registry.digitalocean.com/<your-registry>
 # Applied by clusters:minikube-up - run clusters:minikube-destroy first for a running cluster.
 #MINIKUBE_ADDONS=dashboard,metrics-server,traefik
 #MINIKUBE_CONTAINER_RUNTIME=containerd

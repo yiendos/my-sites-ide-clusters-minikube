@@ -38,7 +38,7 @@ class UpCommand extends Command
         $createStoragePath = $this->deploymentFile($site, 'create-storage.sh');
 
         if (!file_exists($createStoragePath)) {
-            $output->writeln("<error>No $createStoragePath - run deploy:site:bootstrap $site first</error>");
+            $output->writeln("<error>No $createStoragePath - run deploy:k8s-bootstrap $site first</error>");
             return Command::FAILURE;
         }
 

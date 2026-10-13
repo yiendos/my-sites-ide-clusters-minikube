@@ -32,9 +32,9 @@ You need some virtualisation (Docker, QEMU, Hyperkit, VirtualBox...), plus `mini
 
     This starts minikube and creates the persistent volume folders from the site's `create-storage.sh`. It installs a storage class that mimics DigitalOcean's `do-block-storage`, and installs cert-manager.
 
-3. Build your site's images, load them into the cluster, and deploy. With `onsidelive/deploy` installed, `deploy:site:build-push <site>` does all three.
+3. Build your site's images, load them into the cluster, and deploy. With [yiendos/my-sites-ide-deploy-k8s](https://github.com/yiendos/my-sites-ide-deploy-k8s) installed, `deploy:k8s-build-push <site> local` does all three.
 
-The site needs `Repos/<site>/_build/deployment/create-storage.sh` and `local.yaml`, which `deploy:site:bootstrap <site>` writes.
+The site needs `Repos/<site>/_build/deployment/create-storage.sh` and `local.yaml`, which `deploy:k8s-bootstrap <site>` writes (it runs automatically for new sites when the deploy plugin is installed).
 
 Supporting services (databases, Redis, mail) aren't deployed to the cluster. Sites connect to the ones my-sites-ide already runs, through `host.minikube.internal`. That mirrors production, where they'd be managed services.
 
@@ -47,7 +47,7 @@ Supporting services (databases, Redis, mail) aren't deployed to the cluster. Sit
 | `clusters:minikube-up <site>` | Start minikube and create the site's persistent volume folders |
 | `clusters:minikube-storage <site>` | Install the mock DigitalOcean storage class |
 | `clusters:minikube-cert-manager` | Install cert-manager from the jetstack helm repo |
-| `clusters:minikube-load-images <site>` | Load the site's `fpm-server`, `web-server`, `cron` and `cli` images into minikube |
+| `clusters:minikube-load-images <site> [image...]` | Load images into minikube - the ones given (`deploy:k8s-build-push` passes exactly what it built), else the site's `fpm-server`, `web-server`, `cron` and `cli` `-latest` images from `MINIKUBE_REGISTRY` |
 | `clusters:minikube-port-forward <site>` | Serve the site on http://localhost:8090 |
 | `clusters:minikube-dashboard` | Open the Kubernetes dashboard |
 | `clusters:minikube-next-steps <site>` | What to run once the cluster is up |
@@ -61,7 +61,7 @@ Defaults live in this plugin's `.env`; override any of them in the root `.env`.
 
 | Variable | Default | |
 |---|---|---|
-| `MINIKUBE_REGISTRY` | `registry.digitalocean.com/yiendos` | images load from `<registry>/<site>:<image>-latest` |
+| `MINIKUBE_REGISTRY` | none | only for `clusters:minikube-load-images` without image references - loads `<registry>/<site>:<image>-latest`, e.g. `registry.digitalocean.com/<your-registry>` |
 | `MINIKUBE_ADDONS` | `dashboard,metrics-server,traefik` | addons `clusters:minikube-up` enables |
 | `MINIKUBE_CONTAINER_RUNTIME` | `containerd` | |
 | `MINIKUBE_CERT_MANAGER_VERSION` | `v1.15.2` | jetstack cert-manager chart version |

@@ -16,7 +16,7 @@ trait InteractsWithMinikube
 
     /**
      * A site's deployment file, e.g. Repos/<site>/_build/deployment/local.yaml -
-     * written by deploy:site:bootstrap
+     * written by deploy:k8s-bootstrap
      *
      * @param string $site
      * @param string $file

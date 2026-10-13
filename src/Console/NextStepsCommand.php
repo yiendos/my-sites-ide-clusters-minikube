@@ -41,13 +41,13 @@ class NextStepsCommand extends Command
         ]);
 
         //building images is deploy's job - only point at it when it's installed
-        if ($this->getApplication()?->has('deploy:site:build')) {
-            $output->writeLn('my-sites-ide deploy:site:build ' . $site);
+        //building images and deploying is a deploy plugin's job - only point at it when it's installed
+        if ($this->getApplication()?->has('deploy:k8s-build-push')) {
+            $output->writeLn("my-sites-ide deploy:k8s-build-push $site local");
         } else {
-            $output->writeLn("build and tag your site's images (e.g. with onsidelive/deploy's deploy:site:build)");
+            $output->writeLn("build and tag your site's images (e.g. with yiendos/my-sites-ide-deploy-k8s)");
+            $output->writeLn('my-sites-ide clusters:minikube-load-images ' . $site);
         }
-
-        $output->writeLn('my-sites-ide clusters:minikube-load-images ' . $site);
 
         return Command::SUCCESS;
     }
