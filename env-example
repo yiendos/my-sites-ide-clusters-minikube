@@ -1,0 +1,12 @@
+# [minikube]
+# Defaults live in this plugin's .env - uncomment to override.
+# Only for clusters:minikube-load-images run without image references (deploy:k8s-build-push
+# passes them) - loads <registry>/<site>:{fpm-server,web-server,cron,cli}-latest into the cluster.
+#MINIKUBE_REGISTRY=registry.digitalocean.com/<your-registry>
+# Applied by clusters:minikube-up - run clusters:minikube-destroy first for a running cluster.
+#MINIKUBE_ADDONS=dashboard,metrics-server,traefik
+#MINIKUBE_CONTAINER_RUNTIME=containerd
+# The jetstack cert-manager chart installed by clusters:minikube-cert-manager
+#MINIKUBE_CERT_MANAGER_VERSION=v1.15.2
+# http://localhost:<port> for clusters:minikube-port-forward
+#MINIKUBE_PORT_FORWARD=8090

@@ -1,0 +1,35 @@
+{
+    "name": "yiendos/my-sites-ide-clusters-minikube",
+    "description": "Minikube - a single-node Kubernetes cluster on your machine, set up to mimic DigitalOcean, for test deployments - for my-sites-ide",
+    "type": "my-sites-ide-plugin",
+    "license": "MIT",
+    "keywords": [
+        "my-sites-ide",
+        "minikube",
+        "kubernetes",
+        "k8s",
+        "helm"
+    ],
+    "authors": [
+        {
+            "name": "Paul Yiend",
+            "email": "yiendos@sbmatrix.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Yiendos\\MySitesIde\\Clusters\\Minikube\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "symfony/console": "^7.3"
+    },
+    "extra": {
+        "my-sites-ide": {
+            "commands": "src/Console",
+            "env": ".env",
+            "env-example": "env-example"
+        }
+    }
+}
